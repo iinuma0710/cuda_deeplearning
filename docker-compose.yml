@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  cuda_pytorch:
+    build: .
+    container_name: cuda_pytorch_container
+    # 共有メモリの設定
+    shm_size: "20gb"
+    # 作業ディレクトリの指定とマウント
+    working_dir: /work
+    volumes:
+      - ./:/work
+      - samba_dataset:/dataset
+    # ポートの指定と Jupyter Lab の起動
+    ports:
+      - "8888:8888"
+    command:
+      jupyter-lab --ip 0.0.0.0 --allow-root -b localhost --NotebookApp.token=''
+    # GPU を使うための設定
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [utility, compute, video]
+
+volumes:
+  samba_dataset:
+    driver_opts:
+      type: cifs
+      o: 'rw,username=yuko,password=rt32Yj5RH3'
+      device: "//192.168.3.3/dataset"
