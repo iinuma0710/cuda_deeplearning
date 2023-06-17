@@ -1,0 +1,2 @@
+# cuda_deeplearning
+GPUプログラミングと深層学習の勉強用リポジトリ
