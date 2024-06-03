@@ -10,7 +10,7 @@ services:
     working_dir: /work
     volumes:
       - ./:/work
-      - samba_dataset:/dataset
+      - dataset:/dataset
     # ポートの指定と Jupyter Lab の起動
     ports:
       - "8888:8888"
@@ -25,8 +25,8 @@ services:
               capabilities: [utility, compute, video]
 
 volumes:
-  samba_dataset:
+  dataset:
     driver_opts:
       type: cifs
       o: 'rw,username=yuko,password=rt32Yj5RH3'
-      device: "//192.168.3.3/dataset"
+      device: "//192.168.100.11/dataset"
